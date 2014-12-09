@@ -52,7 +52,7 @@ classdef ParforProgress < handle
         error('Unable to create temporary file in %s', temp_dir);
       end
       
-      if in_parfor
+      if ParforProgress.InParfor
         obj.b_CreatedInParfor = true;
       else
         obj.b_CreatedInParfor = false;
@@ -99,7 +99,7 @@ classdef ParforProgress < handle
     function delete(obj)
       % Destructor
       
-      if in_parfor && ~obj.b_CreatedInParfor
+      if ParforProgress.InParfor && ~obj.b_CreatedInParfor
         % Don't remove the file if we're in a parfor loop and this object wasn't
         % created in that loop. The parfor workers each individually try to delete the
         % ParforProgress object but we won't let them; let the calling function delete
@@ -126,6 +126,23 @@ classdef ParforProgress < handle
         fprintf('Completed iteration %d of %d in %s\n', iteration_number, num_iterations, time_elapsed(0, times(kk)));
       end
       iteration_idx = GetLoopCounterList(pp);
+    end
+
+    function [b_parfor, worker_id] = InParfor
+      % Determine whether we're currently in a parfor loop
+      % [b_parfor, worker_id] = ParforProgress.InParfor
+      % 
+      % b_parfor is true if we're in a parfor loop, false otherwise
+      % If we're not in a parfor loop, worker_id = nan
+
+      task = getCurrentTask;
+      if isempty(task)
+        b_parfor = false;
+        worker_id = nan;
+      else
+        b_parfor = true;
+        worker_id = task.ID;
+      end
     end
   end
 end
