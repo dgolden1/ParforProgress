@@ -15,7 +15,9 @@ end
 
 The numbers may not go exactly in order depending on the order in which the parallel workers finish, but they'll be close enough so you'll get the idea of where you are.
 
-The technique of using a single file to store the iteration information was inspired
-by this file exchange utility:
+See this code on the Matlab file exchange: http://www.mathworks.com/matlabcentral/fileexchange/48705-parforprogress-class
+
+The technique of using a single file to store the iteration information was inspired by this file exchange utility:
 
 http://www.mathworks.com/matlabcentral/fileexchange/32101-progress-monitor--progress-bar--that-works-with-parfor
+
