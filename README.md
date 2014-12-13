@@ -1,6 +1,6 @@
 Class to monitor progress of parfor loop
 
-Create an empty file in the temporary directory for each iteration and count the files to determine which iteration we're on
+The parallel workers write to a common file for each iteration and determine the total number of completed iterations by counting the number of lines in the file.
 
 USAGE:
 
